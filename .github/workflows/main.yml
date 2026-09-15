@@ -1,31 +1,31 @@
-姓名: 安卓安装包
+name: Android APK
 
-在……之上:
-推:
-分支机构:
-      - 主要的
+on:
+  push:
+    branches:
+      - main
 
-工作:
-建立:
-连续的: Ubuntu-最新
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-步骤:
-      - 姓名: 拉取代码
-uses: 操作/结帐@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
--姓名: 配置JDK
-uses: 操作/设置-Java@v4
-和……一起:
-java版: '17'
-分布: 'temurin'
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-      - 姓名: 打包APPK
-跑: |
-chmod+x gradlew
-./gradlew装配调试
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
-      - 姓名: 上传APK
-uses: 操作/上载工件@v4
-和……一起:
-姓名: app-debug.apk
-路径: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
